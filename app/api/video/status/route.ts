@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
-import { VideoTransformation } from '@/lib/models/VideoTransformation';
-import connectDB from '@/lib/mongodb';
+import { VideoProcessing } from '@/lib/models/video';
+import connectDB from '@/lib/utils/mongodb';
 import { FilterQuery, Model } from 'mongoose';
 
 interface IVideoTransformation {
@@ -44,43 +44,42 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    await connectDB();
+    const url = new URL(req.url);
+    const processingId = url.searchParams.get('processingId');
 
-    const transformationId = req.nextUrl.searchParams.get('id');
-    if (!transformationId) {
+    if (!processingId) {
       return NextResponse.json(
-        { error: 'Transformation ID is required' },
+        { error: 'Missing processingId parameter' },
         { status: 400 }
       );
     }
 
-    const VideoTransformationModel = VideoTransformation as Model<IVideoTransformation>;
-    const transformation = await VideoTransformationModel.findOne({
-      _id: transformationId,
+    await connectDB();
+
+    const processing = await VideoProcessing.findOne({
+      _id: processingId,
       userId,
     });
 
-    if (!transformation) {
+    if (!processing) {
       return NextResponse.json(
-        { error: 'Transformation not found' },
+        { error: 'Processing record not found' },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
-      status: transformation.status,
-      originalVideo: transformation.originalVideo,
-      transformedVideo: transformation.transformedVideo,
-      parameters: transformation.parameters,
-      error: transformation.error,
-      startedAt: transformation.startedAt,
-      completedAt: transformation.completedAt,
+      status: processing.status,
+      sourceVideo: processing.sourceVideo,
+      transformedVideo: processing.transformedVideo,
+      error: processing.error,
+      startedAt: processing.startedAt,
+      completedAt: processing.completedAt,
     });
-
   } catch (error) {
-    console.error('Error in video status:', error);
+    console.error('Error getting video status:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: error instanceof Error ? error.message : 'Failed to get video status' },
       { status: 500 }
     );
   }
@@ -107,7 +106,7 @@ export async function POST(req: NextRequest) {
       query.status = status;
     }
 
-    const VideoTransformationModel = VideoTransformation as Model<IVideoTransformation>;
+    const VideoTransformationModel = VideoProcessing as Model<IVideoTransformation>;
     const transformations = await VideoTransformationModel.find(query)
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
