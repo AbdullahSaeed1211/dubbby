@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import { Upload, Languages, VideoIcon, Info, Globe } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-export default function VideosPage() {
+function VideosPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const defaultTab = searchParams.get('tab') || 'myvideos';
@@ -236,5 +236,13 @@ export default function VideosPage() {
         </TabsContent>
       </Tabs>
     </div>
+  );
+}
+
+export default function VideosPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VideosPageContent />
+    </Suspense>
   );
 } 
