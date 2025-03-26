@@ -2,12 +2,19 @@
 
 import Link from 'next/link';
 import { UserButton, SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
-import { ModeToggle } from './mode-toggle';
+import { ModeToggle } from '@/app/components/mode-toggle';
 import { VideoIcon } from 'lucide-react';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
+import { usePathname } from 'next/navigation';
 
 export function Navigation() {
   const { isLoaded } = useAuth();
+  const pathname = usePathname();
+
+  // Don't render navigation on dashboard routes
+  if (pathname?.startsWith('/dashboard')) {
+    return null;
+  }
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
