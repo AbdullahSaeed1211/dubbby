@@ -7,14 +7,15 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { BellIcon, CreditCard, LogOut, Moon, Settings, Sun, User } from "lucide-react";
+import { BellIcon, CreditCard, LogOut, Moon, Sun } from "lucide-react";
 import { UserProfile } from "@clerk/nextjs";
+import { DashboardTabs } from "../../components/dashboard/common/DashboardTabs";
 
 const profileFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -27,6 +28,7 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>;
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
   const [showClerkProfile, setShowClerkProfile] = useState(false);
+  const [activeTab, setActiveTab] = useState("account");
   
   // Default values for the form
   const defaultValues: Partial<ProfileFormValues> = {
@@ -54,30 +56,17 @@ export default function SettingsPage() {
         </p>
       </div>
       
-      <Tabs defaultValue="account" className="w-full space-y-4">
-        <TabsList className="w-full border-b rounded-none p-0 h-10">
-          <TabsTrigger 
-            value="account" 
-            className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:text-blue-600 data-[state=active]:shadow-none data-[state=active]:rounded-none data-[state=active]:bg-transparent rounded-none px-4 h-10 flex items-center gap-2"
-          >
-            <User className="h-4 w-4" />
-            Account
-          </TabsTrigger>
-          <TabsTrigger 
-            value="billing" 
-            className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:text-blue-600 data-[state=active]:shadow-none data-[state=active]:rounded-none data-[state=active]:bg-transparent rounded-none px-4 h-10 flex items-center gap-2"
-          >
-            <CreditCard className="h-4 w-4" />
-            Billing
-          </TabsTrigger>
-          <TabsTrigger 
-            value="preferences" 
-            className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:text-blue-600 data-[state=active]:shadow-none data-[state=active]:rounded-none data-[state=active]:bg-transparent rounded-none px-4 h-10 flex items-center gap-2"
-          >
-            <Settings className="h-4 w-4" />
-            Preferences
-          </TabsTrigger>
-        </TabsList>
+      <Tabs value={activeTab} className="w-full space-y-4">
+        <DashboardTabs 
+          tabs={[
+            { value: "account", label: "Account" },
+            { value: "billing", label: "Billing" },
+            { value: "preferences", label: "Preferences" },
+          ]}
+          defaultValue={activeTab}
+          onValueChange={setActiveTab} 
+          variant="full"
+        />
         
         <TabsContent value="account" className="w-full space-y-4">
           {showClerkProfile ? (
@@ -134,7 +123,7 @@ export default function SettingsPage() {
                         </FormItem>
                       )}
                     />
-                    <Button type="submit" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white">
+                    <Button variant="premium" type="submit">
                       Save Changes
                     </Button>
                   </form>
@@ -144,7 +133,7 @@ export default function SettingsPage() {
                 <Button variant="ghost" onClick={() => setShowClerkProfile(true)}>
                   Advanced Profile Settings
                 </Button>
-                <Button variant="outline" className="text-red-600 hover:text-red-700 hover:bg-red-50">
+                <Button variant="outline" className="text-red-600 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/10">
                   <LogOut className="h-4 w-4 mr-2" />
                   Sign Out
                 </Button>
@@ -170,7 +159,7 @@ export default function SettingsPage() {
                       Growth Plan
                     </p>
                   </div>
-                  <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-3 py-1 rounded-full text-white text-xs font-medium">
+                  <div className="bg-gradient-to-r from-premium-light to-premium-dark px-3 py-1 rounded-full text-white text-xs font-medium">
                     Active
                   </div>
                 </div>
@@ -191,8 +180,8 @@ export default function SettingsPage() {
               </div>
               
               <div className="flex gap-2">
-                <Button variant="outline" className="flex-1">Change Plan</Button>
-                <Button variant="outline" className="flex-1 text-red-600 hover:text-red-700 hover:bg-red-50">Cancel Plan</Button>
+                <Button variant="accent" className="flex-1">Change Plan</Button>
+                <Button variant="outline" className="flex-1 text-red-600 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/10">Cancel Plan</Button>
               </div>
             </CardContent>
           </Card>
@@ -240,7 +229,7 @@ export default function SettingsPage() {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className={`flex-1 py-6 ${theme === 'light' ? 'border-blue-600 text-blue-600 ring-2 ring-blue-100 dark:ring-blue-900/30' : ''}`}
+                    className={`flex-1 py-6 ${theme === 'light' ? 'border-accent text-accent ring-2 ring-accent/10' : ''}`}
                     onClick={() => setTheme('light')}
                   >
                     <Sun className="h-5 w-5 mr-2" />
@@ -249,7 +238,7 @@ export default function SettingsPage() {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className={`flex-1 py-6 ${theme === 'dark' ? 'border-blue-600 text-blue-600 ring-2 ring-blue-100 dark:ring-blue-900/30' : ''}`}
+                    className={`flex-1 py-6 ${theme === 'dark' ? 'border-accent text-accent ring-2 ring-accent/10' : ''}`}
                     onClick={() => setTheme('dark')}
                   >
                     <Moon className="h-5 w-5 mr-2" />
@@ -258,7 +247,7 @@ export default function SettingsPage() {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className={`flex-1 py-6 ${theme === 'system' ? 'border-blue-600 text-blue-600 ring-2 ring-blue-100 dark:ring-blue-900/30' : ''}`}
+                    className={`flex-1 py-6 ${theme === 'system' ? 'border-accent text-accent ring-2 ring-accent/10' : ''}`}
                     onClick={() => setTheme('system')}
                   >
                     System
@@ -353,7 +342,7 @@ export default function SettingsPage() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white">
+              <Button variant="premium">
                 <BellIcon className="h-4 w-4 mr-2" />
                 Save Notification Preferences
               </Button>

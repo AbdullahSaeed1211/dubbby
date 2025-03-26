@@ -1,4 +1,4 @@
-import { VideoStatus } from '@/app/components/video/VideoStatus';
+import { VideoStatus } from '@/app/components/videos/VideoStatus';
 import { Toaster } from 'sonner';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

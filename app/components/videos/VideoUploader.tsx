@@ -53,7 +53,6 @@ export function VideoUploader() {
         
         if (uploadcare) {
           // Create the uploader instance
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const uploader = uploadcare.createFileUploader({
             pubkey: process.env.NEXT_PUBLIC_UPLOADCARE_PUBLIC_KEY!,
             container: '#uploader-container',
@@ -199,7 +198,7 @@ export function VideoUploader() {
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select target language" />
+                            <SelectValue placeholder="Select language" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -209,24 +208,7 @@ export function VideoUploader() {
                         </SelectContent>
                       </Select>
                       <FormDescription>
-                        The language your video will be dubbed into
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="prompt"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-base font-medium">Voice Instructions (Optional)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="E.g., professional male voice, excited female narrator" {...field} />
-                      </FormControl>
-                      <FormDescription>
-                        Additional instructions for voice style
+                        Select the language your video will be dubbed to
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -239,7 +221,7 @@ export function VideoUploader() {
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                       <div className="space-y-0.5">
-                        <FormLabel className="text-base font-medium">Enable Lip Sync</FormLabel>
+                        <FormLabel className="text-base font-medium">Lip Sync</FormLabel>
                         <FormDescription>
                           Synchronize lip movements with the dubbed audio
                         </FormDescription>
@@ -254,8 +236,36 @@ export function VideoUploader() {
                   )}
                 />
 
-                <Button type="submit" className="w-full" size="lg">
-                  Create Dubbed Video
+                <FormField
+                  control={form.control}
+                  name="prompt"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base font-medium">Custom Prompt (Optional)</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Add specific instructions for the model..."
+                          {...field}
+                          value={field.value || ''}
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        Add specific instructions to customize the dubbing process
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button type="submit" className="w-full" disabled={isUploading}>
+                  {isUploading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Processing...
+                    </>
+                  ) : (
+                    'Process Video'
+                  )}
                 </Button>
               </form>
             </Form>

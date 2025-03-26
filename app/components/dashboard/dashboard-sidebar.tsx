@@ -28,7 +28,7 @@ export function DashboardSidebar() {
             variant="ghost"
             className={cn(
               "w-full justify-start text-sm font-normal",
-              pathname === "/dashboard" && "bg-blue-50 text-blue-700 hover:bg-blue-100 hover:text-blue-800 dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/30 dark:hover:text-blue-300"
+              pathname === "/dashboard" && "bg-accent/10 text-accent hover:bg-accent/20 hover:text-accent"
             )}
           >
             <Home className="h-4 w-4 mr-2" />
@@ -40,7 +40,7 @@ export function DashboardSidebar() {
             variant="ghost"
             className={cn(
               "w-full justify-start text-sm font-normal",
-              pathname === "/dashboard/videos" && "bg-blue-50 text-blue-700 hover:bg-blue-100 hover:text-blue-800 dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/30 dark:hover:text-blue-300"
+              pathname === "/dashboard/videos" && "bg-accent/10 text-accent hover:bg-accent/20 hover:text-accent"
             )}
           >
             <Video className="h-4 w-4 mr-2" />
@@ -52,7 +52,7 @@ export function DashboardSidebar() {
             variant="ghost"
             className={cn(
               "w-full justify-start text-sm font-normal",
-              pathname === "/dashboard/history" && "bg-blue-50 text-blue-700 hover:bg-blue-100 hover:text-blue-800 dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/30 dark:hover:text-blue-300"
+              pathname === "/dashboard/history" && "bg-accent/10 text-accent hover:bg-accent/20 hover:text-accent"
             )}
           >
             <History className="h-4 w-4 mr-2" />
@@ -64,7 +64,7 @@ export function DashboardSidebar() {
             variant="ghost"
             className={cn(
               "w-full justify-start text-sm font-normal",
-              pathname === "/dashboard/settings" && "bg-blue-50 text-blue-700 hover:bg-blue-100 hover:text-blue-800 dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/30 dark:hover:text-blue-300"
+              pathname === "/dashboard/settings" && "bg-accent/10 text-accent hover:bg-accent/20 hover:text-accent"
             )}
           >
             <Settings className="h-4 w-4 mr-2" />
@@ -96,9 +96,9 @@ export function DashboardSidebar() {
             <Progress value={0} className="h-1 bg-muted" />
           </div>
           <Button
-            variant="ghost"
+            variant="premium"
             size="sm"
-            className="w-full justify-center text-sm font-medium bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white"
+            className="w-full justify-center text-sm font-medium"
           >
             <Crown className="h-4 w-4 mr-2" />
             Upgrade Plan

@@ -16,7 +16,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
         </div>
         <main className="flex-1 overflow-y-auto">
           <div 
-            className={`mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full max-w-6xl transition-all duration-300 ease-in-out`}
+            className="px-4 sm:px-6 lg:px-8 py-6 w-full transition-all duration-300 ease-in-out"
           >
             {children}
           </div>

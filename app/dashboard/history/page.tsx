@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CheckIcon, HistoryIcon, Languages, TimerIcon, VideoIcon } from "lucide-react";
 import { format } from "date-fns";
+import { DashboardTabs } from "../../components/dashboard/common/DashboardTabs";
 
 interface HistoryItem {
   id: number;
@@ -73,26 +74,16 @@ export default function HistoryPage() {
       </div>
       
       <Tabs defaultValue="all" onValueChange={setActiveTab} className="w-full space-y-4">
-        <TabsList className="w-full border-b rounded-none p-0 h-10">
-          <TabsTrigger 
-            value="all" 
-            className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:text-blue-600 data-[state=active]:shadow-none data-[state=active]:rounded-none data-[state=active]:bg-transparent rounded-none px-4 h-10"
-          >
-            All Activity
-          </TabsTrigger>
-          <TabsTrigger 
-            value="upload" 
-            className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:text-blue-600 data-[state=active]:shadow-none data-[state=active]:rounded-none data-[state=active]:bg-transparent rounded-none px-4 h-10"
-          >
-            Uploads
-          </TabsTrigger>
-          <TabsTrigger 
-            value="dubbing" 
-            className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:text-blue-600 data-[state=active]:shadow-none data-[state=active]:rounded-none data-[state=active]:bg-transparent rounded-none px-4 h-10"
-          >
-            Dubbings
-          </TabsTrigger>
-        </TabsList>
+        <DashboardTabs 
+          tabs={[
+            { value: "all", label: "All Activity" },
+            { value: "upload", label: "Uploads" },
+            { value: "dubbing", label: "Dubbings" },
+          ]}
+          defaultValue="all"
+          onValueChange={setActiveTab} 
+          variant="full"
+        />
         
         <TabsContent value="all" className="w-full space-y-4">
           <HistoryList items={filteredItems} />
@@ -139,8 +130,8 @@ function HistoryCard({ item }: { item: HistoryItem }) {
   return (
     <Card className="w-full">
       <CardHeader className="flex flex-row items-center gap-4 pb-2">
-        <div className="p-2 rounded-full bg-blue-50 dark:bg-blue-900/20">
-          <Icon className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+        <div className="p-2 rounded-full bg-accent/10">
+          <Icon className="h-5 w-5 text-accent" />
         </div>
         <div className="flex-1">
           <div className="flex items-center justify-between">
@@ -200,7 +191,7 @@ function HistoryCard({ item }: { item: HistoryItem }) {
         </div>
       </CardContent>
       <CardFooter className="justify-end pt-2">
-        <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/20">
+        <Button variant="accent" size="sm">
           View Details
         </Button>
       </CardFooter>

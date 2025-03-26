@@ -86,6 +86,40 @@ export function UploadSection() {
     }
   };
 
+  const handleSubmit = async () => {
+    if (!uploadInfo?.uuid) {
+      toast.error("Please upload a video first");
+      return;
+    }
+
+    setProcessing(true);
+    try {
+      const response = await fetch("/api/dubbing", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          videoId: uploadInfo.uuid,
+          params,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server responded with ${response.status}`);
+      }
+
+      await response.json();
+      toast.success("Dubbing job submitted successfully!");
+      // Redirect or update UI as needed
+    } catch (error) {
+      console.error("[DUBBING_ERROR]", error);
+      toast.error("Failed to process video. Please try again.");
+    } finally {
+      setProcessing(false);
+    }
+  };
+
   return (
     <Card className="overflow-hidden max-w-3xl mx-auto">
       <div className="p-6">
@@ -198,32 +232,26 @@ export function UploadSection() {
                 <video
                   src={previewUrl}
                   controls
-                  className="w-full rounded-lg border bg-muted"
+                  className="w-full aspect-video rounded-md border bg-black"
                 />
               </div>
             )}
 
             <Button
-              className="w-full"
-              size="lg"
+              onClick={handleSubmit}
               disabled={!uploadInfo || processing}
-              onClick={() => {
-                if (!uploadInfo) return;
-                setProcessing(true);
-                // Add your translation logic here
-                toast.success("Translation started!");
-              }}
+              className="w-full"
             >
               {processing ? (
-                <>
+                <span className="flex items-center">
                   <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
                   Processing...
-                </>
+                </span>
               ) : (
-                <>
+                <span className="flex items-center">
                   <Video className="mr-2 h-4 w-4" />
-                  Start Global Expansion
-                </>
+                  Create Dub
+                </span>
               )}
             </Button>
           </div>
