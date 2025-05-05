@@ -107,7 +107,7 @@ export function CTASection() {
                 className="w-full sm:w-auto"
               >
                 <Button size="lg" className="w-full sm:w-auto gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base group" asChild>
-                  <Link href="/sign-up">
+                  <Link href="/waitlist">
                     Start Your Free Trial Now
                     <motion.div
                       animate={{ x: isHovered ? 3 : 0 }}

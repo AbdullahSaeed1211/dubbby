@@ -125,7 +125,7 @@ export function PricingSection() {
                 
                 <div className="mt-8">
                   <Button className="w-full" asChild>
-                    <Link href="/sign-up">Get Started</Link>
+                    <Link href="/waitlist">Get Started</Link>
                   </Button>
                 </div>
               </motion.div>
@@ -296,7 +296,7 @@ export function PricingSection() {
                 
                 <div className="mt-8">
                   <Button className="w-full" asChild>
-                    <Link href="/sign-up">Get Started</Link>
+                    <Link href="/waitlist">Get Started</Link>
                   </Button>
                 </div>
               </motion.div>

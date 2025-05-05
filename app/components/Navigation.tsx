@@ -61,12 +61,13 @@ export function Navigation() {
               </SignedIn>
               <SignedOut>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" asChild>
-                    <Link href="/sign-in">Sign In</Link>
-                  </Button>
-                  <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-                    <Link href="/sign-up">
-                      Get Started
+                  <Button 
+                    size="sm" 
+                    className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-md" 
+                    asChild
+                  >
+                    <Link href="/waitlist">
+                      Join Waitlist
                     </Link>
                   </Button>
                 </div>

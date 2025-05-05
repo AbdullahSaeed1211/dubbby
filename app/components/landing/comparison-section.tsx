@@ -233,11 +233,11 @@ export function ComparisonSection() {
                           transition={{ type: "spring", stiffness: 400, damping: 20 }}
                         >
                           <Button size="lg" className="w-full md:w-auto gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg h-12 text-base px-8" asChild>
-                            <Link href="/sign-up">
+                            <Link href="/waitlist">
                               Claim Free 100 Minutes
                               <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
+                            </Link>
+                          </Button>
                         </motion.div>
                       </AnimatedBeam>
                       <p className="mt-2 text-center text-xs text-muted-foreground">
@@ -264,7 +264,7 @@ export function ComparisonSection() {
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
                   >
                     <Button size="lg" className="gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg h-12 text-base px-8" asChild>
-                      <Link href="/sign-up">
+                      <Link href="/waitlist">
                         Claim Free 100 Minutes
                         <ArrowRight className="h-4 w-4" />
                       </Link>
