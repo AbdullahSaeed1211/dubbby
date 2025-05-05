@@ -40,7 +40,7 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
 The waitlist implementation consists of the following files:
 
 - `app/waitlist/[[...waitlist]]/page.tsx`: The waitlist page with the Clerk Waitlist component
-- `app/sign-in/[[...sign-in]]/page.tsx`: The sign-in page for approved users
+- `app/(auth)/sign-in/[[...sign-in]]/page.tsx`: The sign-in page for approved users
 - `middleware.ts`: Next.js middleware for authentication and route protection
 - `app/layout.tsx`: Root layout with the ClerkProvider configured for waitlist
 
