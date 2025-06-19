@@ -12,6 +12,7 @@ import { ArrowUp } from 'lucide-react';
 import { ScrollIndicator } from '@/components/ui/scroll-indicator';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import Head from 'next/head';
 
 export default function Home() {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -42,8 +43,105 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Structured Data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://dubbby.com/#website",
+        "url": "https://dubbby.com/",
+        "name": "Dubbby",
+        "description": "Transform your videos with AI-powered dubbing and perfect lip synchronization",
+        "potentialAction": [
+          {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://dubbby.com/search?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        ],
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://dubbby.com/#software",
+        "name": "Dubbby",
+        "applicationCategory": "VideoApplication",
+        "operatingSystem": "Web Browser",
+        "url": "https://dubbby.com/",
+        "description": "AI-powered video dubbing platform that translates content into 15+ languages with perfect lip synchronization in 30 seconds",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free trial with 100 minutes included"
+        },
+        "featureList": [
+          "AI Video Dubbing",
+          "Perfect Lip Synchronization", 
+          "15+ Language Support",
+          "30-Second Processing",
+          "High-Quality Voice Synthesis",
+          "Content Creator Tools"
+        ],
+        "screenshot": "https://dubbby.com/og-image.jpg",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "ratingCount": "150",
+          "bestRating": "5",
+          "worstRating": "1"
+        }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://dubbby.com/#organization",
+        "name": "Dubbby",
+        "url": "https://dubbby.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dubbby.com/logo.png"
+        },
+        "description": "Leading AI video dubbing platform for content creators",
+        "foundingDate": "2024",
+        "sameAs": [
+          "https://twitter.com/dubbby",
+          "https://linkedin.com/company/dubbby",
+          "https://youtube.com/@dubbby"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "email": "support@dubbby.com"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://dubbby.com/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://dubbby.com/"
+          }
+        ]
+      }
+    ]
+  };
+
   return (
     <>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      </Head>
+      
       {/* Scroll Progress Indicator */}
       <ScrollIndicator color="#3B82F6" height={4} />
       
